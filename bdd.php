@@ -1,21 +1,35 @@
 <?php
 
-$servername = 'localhost';     
-$dbname = 'magazines';
-$username = 'root';
-$password = '';
+/**
+ * Connexion à la BDD
+ */
 
-// Connexion à la base de données
-try { 
-    $bdd = new PDO("mysql:host=$servername;dbname=$dbname;charset=utf8", $username, $password);
-    //On définit le mode d'erreur de PDO sur Exception
-	$bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); // Retour d'erreur à enlever en prod !!
-	//$bdd->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);   // Evite de ne renvoyer que des Strings en tableau associatif   
-    //echo 'Connexion réussie';
+// Localisation de la BDD
+const HOST = 'localhost';
+
+// Nom d'utilisateur
+define('USER', 'root');
+
+// Mot de passe
+define('PASSWD', '');
+
+// Nom de la base de donnée
+define('DBNAME', 'magazines');
+
+try {
+	$db = new PDO("mysql:host=". HOST .";dbname=". DBNAME, USER, PASSWD, [
+		// Gestion des erreurs PHP/SQL
+		PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING,
+		// Gestion du jeu de caractères
+		PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8",
+		// Choix du retours des résultats
+		PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
+	]);
+
+	// echo 'Base de données connectée';
 }
-catch (Exception $e) { 
-    echo $e->getMessage(); 
-    die();
+catch (Exception $error) {
+	// Attrape une exception
+	echo 'Erreur lors de la connexion à la base de données : '. $error->getMessage();
+	die();
 }
-// Si le try échoue, on capture l'erreur et on l'affiche et on quiutte le programme
-?>
