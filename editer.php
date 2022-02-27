@@ -40,7 +40,7 @@ if (!$magazine) {
 			// Vérifie si le prix est bien numérique
 			str_replace(',','.',strval($_POST['prix']));
 
-			if ( is_numeric($_POST['prix']) && checkPriceInRange(floatval($_POST['prix']), 0, 1000) ) {
+			if ( is_numeric($_POST['prix']) && checkPriceInRange(floatval($_POST['prix']), 0, 10000) ) {
 
 			    $nom_image = $_POST['old_image'];
 

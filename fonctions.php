@@ -201,7 +201,7 @@ function updateMagazineById($id, $post, $image)
 	$requete->bindValue(':id', $id, PDO::PARAM_INT);
 
 	$requete->execute();
-
+	
 	return true;
 }
 
@@ -229,15 +229,39 @@ function deleteMagazineById($id)
 function getMinPrice(){
 	global $db;
  
-	$requete = $db->query("SELECT price FROM magazine ORDER BY ASC LIMIT 1");
+	$requete = $db->query("SELECT prix FROM magazine ORDER BY prix ASC LIMIT 1");
 	$result = $requete->fetch();
-	return $result['price'];
+	return $result['prix'];
 }
 
 function getMaxPrice(){
 	global $db;
  
-	$requete = $db->query("SELECT price FROM magazine ORDER BY DESC LIMIT 1");
+	$requete = $db->query("SELECT prix FROM magazine ORDER BY prix DESC LIMIT 1	");
 	$result = $requete->fetch();
-	return $result['price'];
+	return $result['prix'];
 }
+
+function rechercheMagazines($get) {
+		// Je récupère ma connexion à la base de données
+		global $db;
+
+		$magazine_nom = $get['nom'];
+		$magazine_desc = $get['description'];
+		$price_min = $get['prix-min'];
+		$price_max = $get['prix-max']; 	
+		$editeur = $get['editeur_id'];
+		// J'effectue ma requête SQL permettant de récupérer les informations nécessaires
+		$requete = $db->prepare("SELECT magazine.id, magazine.nom, magazine.prix, magazine.description, editeur.nom AS nom_editeur FROM magazine INNER JOIN editeur ON editeur.id = magazine.editeur_id WHERE magazine.prix >= :prix_min AND magazine.prix <= :prix_max");
+		$requete->bindValue(':prix_min', $price_min, PDO::PARAM_STR);
+		$requete->bindValue(':prix_max', $price_max, PDO::PARAM_STR);
+		
+		$requete->execute();
+	
+		echo($price_min);
+		echo($price_max);	
+
+		// Je retourne toutes les valeurs récupérées par ma requête du dessus
+		return $requete->fetchAll();
+
+}		
