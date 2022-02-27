@@ -225,3 +225,19 @@ function deleteMagazineById($id)
 
 	return true;
 }
+
+function getMinPrice(){
+	global $db;
+ 
+	$requete = $db->query("SELECT price FROM magazine ORDER BY ASC LIMIT 1");
+	$result = $requete->fetch();
+	return $result['price'];
+}
+
+function getMaxPrice(){
+	global $db;
+ 
+	$requete = $db->query("SELECT price FROM magazine ORDER BY DESC LIMIT 1");
+	$result = $requete->fetch();
+	return $result['price'];
+}
