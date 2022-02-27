@@ -201,7 +201,7 @@ function updateMagazineById($id, $post, $image)
 	$requete->bindValue(':id', $id, PDO::PARAM_INT);
 
 	$requete->execute();
-	
+
 	return true;
 }
 
@@ -252,7 +252,9 @@ function rechercheMagazines($get) {
 		$price_max = $get['prix-max']; 	
 		$editeur = $get['editeur_id'];
 		// J'effectue ma requête SQL permettant de récupérer les informations nécessaires
-		$requete = $db->prepare("SELECT magazine.id, magazine.nom, magazine.prix, magazine.description, editeur.nom AS nom_editeur FROM magazine INNER JOIN editeur ON editeur.id = magazine.editeur_id WHERE magazine.prix >= :prix_min AND magazine.prix <= :prix_max");
+	//	$requete = $db->prepare("SELECT magazine.id, magazine.nom, magazine.prix, magazine.description, editeur.nom AS nom_editeur FROM magazine INNER JOIN editeur ON editeur.id = magazine.editeur_id WHERE magazine.prix >= :prix_min AND magazine.prix <= :prix_max");
+		$requete = $db->prepare("SELECT magazine.id, magazine.nom, magazine.prix, magazine.description, editeur.nom AS nom_editeur FROM magazine INNER JOIN editeur ON editeur.id = magazine.editeur_id WHERE magazine.prix BETWEEN :prix_min AND :prix_max");
+	
 		$requete->bindValue(':prix_min', $price_min, PDO::PARAM_STR);
 		$requete->bindValue(':prix_max', $price_max, PDO::PARAM_STR);
 		

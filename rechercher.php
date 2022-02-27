@@ -65,6 +65,7 @@ $max = getMaxPrice();
                         <th>ID</th>
                         <th>Nom du magazine</th>
                         <th>Nom de l'éditeur</th>
+                        <th>Prix</th>
                         <th class="text-right">Actions</th>
                     </tr>
                 </thead>
@@ -77,6 +78,7 @@ $max = getMaxPrice();
                         <td><?php echo $magazine['id']; ?></td>
                         <td><?php echo $magazine['nom']; ?></td>
                         <td><?php echo $magazine['nom_editeur']; ?></td>
+                        <td><?php echo $magazine['prix']; ?></td>
                         <td class="text-right">
                             <a href="details.php?id=<?php echo $magazine['id']; ?>" class="btn btn-warning">Voir le détail</a>
                             <a href="editer.php?id=<?php echo $magazine['id']; ?>" class="btn btn-primary">Mettre à jour</a>
