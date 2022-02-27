@@ -38,7 +38,9 @@ if (!$magazine) {
 		if (isNotEmpty($_POST, $champs)) {
 
 			// Vérifie si le prix est bien numérique
-			if (is_numeric($_POST['prix'])) {
+			str_replace(',','.',strval($_POST['prix']));
+
+			if ( is_numeric($_POST['prix']) && checkPriceInRange(floatval($_POST['prix']), 0, 1000) ) {
 
 			    $nom_image = $_POST['old_image'];
 
@@ -91,7 +93,7 @@ if (!$magazine) {
 		<div class="form-group">
 			<label>Prix</label>
 			<div class="input-group">
-				<input type="text" class="form-control" name="prix" value="<?php echo $magazine['prix'] ?>">
+				<input type="number" step = "0.01" class="form-control" name="prix" value="<?php echo $magazine['prix'] ?>">
 				<div class="input-group-append">
 					<div class="input-group-text">€</div>
 				</div>

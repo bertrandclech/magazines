@@ -30,8 +30,10 @@ $editeurs = getAllEditor();
 				if (isNotEmpty($_POST, $champs) && !empty($_FILES['image']) && $_FILES['image']['error'] == 0) {
 
 				    // Vérifie si le prix est bien numérique
-                    if (is_numeric($_POST['prix'])) {
-
+					str_replace(',','.',strval($_POST['prix']));
+	
+                   	if ( is_numeric($_POST['prix']) && checkPriceInRange(floatval($_POST['prix']), 0, 1000) ) {
+					//	if ( is_numeric($_POST['prix']) ) {
                         // Vérifie les caractéristiques de l'image
                         $extension = verifPicture($_FILES['image']);
                         if ($extension) {
@@ -75,7 +77,7 @@ $editeurs = getAllEditor();
 				<div class="form-group">
 					<label>Prix</label>
 					<div class="input-group">
-						<input type="text" class="form-control" name="prix">
+						<input type="number" step="0.01"	 class="form-control" name="prix">
 						<div class="input-group-append">
 							<div class="input-group-text">€</div>
 						</div>

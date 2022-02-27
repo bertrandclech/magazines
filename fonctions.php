@@ -26,6 +26,17 @@ function isNotEmpty($post, $champs)
 	return true;
 }
 
+function checkPriceInRange($prix, $min, $max)
+{
+	if ( ($prix >= $min) && ($prix <= $max) ) {
+		return true;
+	}  
+	else {
+		return false;
+	}
+}
+
+
 /**
  * Vérifie les caractéristiques d'une image
  *
